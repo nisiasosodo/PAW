@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.4.2, created on 2025-03-27 19:34:03
-  from 'file:C:\xampp\htdocs\php_06_uproszczony/app/calc/CalcView.html' */
+/* Smarty version 5.4.2, created on 2025-04-01 21:32:06
+  from 'file:CalcView.html' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.2',
-  'unifunc' => 'content_67e59a1bbc9307_86536464',
+  'unifunc' => 'content_67ec3f36856969_61194050',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'bc13279bd15a7a023f0f940270a27938121f3dff' => 
+    '2ada81ce73ff5953dd944a8394ac7211fb61d074' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\php_06_uproszczony/app/calc/CalcView.html',
-      1 => 1743100436,
+      0 => 'CalcView.html',
+      1 => 1743533235,
       2 => 'file',
     ),
   ),
@@ -20,20 +20,19 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_67e59a1bbc9307_86536464 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\php_06_uproszczony\\app\\calc';
+function content_67ec3f36856969_61194050 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\xampp\\htdocs\\calc_kred_5b\\app\\views';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
 
-
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_184372216567e59a1bbb57b7_75742656', 'content');
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_75528545167ec3f36841776_13139214', 'content');
 }
 /* {block 'content'} */
-class Block_184372216567e59a1bbb57b7_75742656 extends \Smarty\Runtime\Block
+class Block_75528545167ec3f36841776_13139214 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\php_06_uproszczony\\app\\calc';
+$_smarty_current_dir = 'C:\\xampp\\htdocs\\calc_kred_5b\\app\\views';
 ?>
 
 

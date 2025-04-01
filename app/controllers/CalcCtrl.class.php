@@ -1,9 +1,9 @@
 <?php
-// W skrypcie definicji kontrolera nie trzeba dołączać problematycznego skryptu config.php,
-// ponieważ będzie on użyty w miejscach, gdzie config.php zostanie już wywołany.
+namespace app\controllers;
 
-require_once 'CalcForm.class.php';
-require_once 'CalcResult.class.php';
+//zamieniamy zatem 'require' na 'use' wskazując jedynie przestrzeń nazw, w której znajduje się klasa
+use app\forms\CalcForm;
+use app\transfer\CalcResult;
 
 class CalcCtrl {
 
@@ -15,8 +15,6 @@ class CalcCtrl {
         private $mies_oproc;
 
 	public function __construct(){
-
-		$this->msgs = new Messages();
 		$this->form = new CalcForm();
 		$this->result = new CalcResult();
 	}
@@ -36,41 +34,41 @@ class CalcCtrl {
 		
 		// sprawdzenie, czy potrzebne wartości zostały przekazane
 		if ($this->form->kwota == "") {
-			$this->msgs->addError('Nie podano kwoty kredytu.');
+			getMessages()->addError('Nie podano kwoty kredytu.');
 		}
 		if ($this->form->lata == "") {
-			$this->msgs->addError('Nie podano liczby lat.');
+			getMessages()->addError('Nie podano liczby lat.');
 		}
                 if ($this->form->proc == "") {
-			$this->msgs->addError('Nie podano wartości oprocentowania.');
+			getMessages()->addError('Nie podano wartości oprocentowania.');
 		}
 		
 		// nie ma sensu walidować dalej gdy brak parametrów
-		if (! $this->msgs->isError()) {
+		if (! getMessages()->isError()) {
 			
 			// sprawdzenie, czy $x i $y są liczbami całkowitymi
 			if (! is_numeric ( $this->form->kwota )) {
-				$this->msgs->addError('Pierwsza wartość nie jest liczbą całkowitą');
+				getMessages()->addError('Pierwsza wartość nie jest liczbą całkowitą');
 			}
 			if (! is_numeric ( $this->form->lata )) {
-				$this->msgs->addError('Druga wartość nie jest liczbą całkowitą');
+				getMessages()->addError('Druga wartość nie jest liczbą całkowitą');
 			}
                         if (! is_numeric ( $this->form->proc )) {
-				$this->msgs->addError('Trzecia wartość nie jest liczbą całkowitą');
+				getMessages()->addError('Trzecia wartość nie jest liczbą całkowitą');
 			}
                         //sprawdzenie czy parametry mają poprawne wartosći
                         if ($this->form->kwota <= 0){
-                            $this->msgs->addError('Kwota kredytu musi być większa od zera.');
+                           getMessages()->addError('Kwota kredytu musi być większa od zera.');
                         }
                         if ($this->form->lata <= 0){
-                            $this->msgs->addError('Liczba lat musi być większa od zera.');
+                            getMessages()->addError('Liczba lat musi być większa od zera.');
                         }
                         if ($this->form->proc < 0){
-                            $this->msgs->addError('Wartość oprocentowania musi być liczbą nieujemną.');
+                           getMessages()->addError('Wartość oprocentowania musi być liczbą nieujemną.');
                         }
 		}
 		
-		return !$this->msgs->isError();
+		return !getMessages()->isError();
 	}
 	
 	public function process(){
@@ -81,7 +79,7 @@ class CalcCtrl {
 			$this->form->kwota = intval($this->form->kwota);
 			$this->form->lata = intval($this->form->lata);
                         $this->form->proc = floatval($this->form->proc);
-			$this->msgs->addInfo('Wprowadzono parametry');
+			getMessages()->addInfo('Wprowadzono parametry');
 				
 			//obliczenia
                         
@@ -93,7 +91,7 @@ class CalcCtrl {
                         else{
                         $this->result->result = round(($this->form->kwota) * (($this->mies_oproc) / (1- pow(1 + ($this->mies_oproc), -($this->licz_mies)))), 2);}
 			
-			$this->msgs->addInfo('Wykonano obliczenia.');
+			getMessages()->addInfo('Wykonano obliczenia.');
 		}
                 else{$this->result->result = null;}
 		
@@ -102,15 +100,11 @@ class CalcCtrl {
 	
 	
 	public function generateView(){
-                
-                //var_dump($this->result); // Sprawdzi, co jest w zmiennej
-                //error_log(print_r($this->result, true)); // Sprawdzi, co jest w logach serwera
-                //die();		
+                	
 		getSmarty()->assign('page_title','Kalkulator kredytowy');
 		getSmarty()->assign('page_description','Oblicz miesięczną ratę swojego kredytu.');
 		getSmarty()->assign('page_header','Kalkulator kredytowy');
 					
-		getSmarty()->assign('msgs',$this->msgs);
 		getSmarty()->assign('form',$this->form);
                 getSmarty()->assign('result',$this->result);
                 
