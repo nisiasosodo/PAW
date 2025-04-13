@@ -1,23 +1,20 @@
+{extends file="main.tpl"}
 
 {block name=content}
-
-<!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
-<head> 
-    <meta charset="utf-8" />
-    <title>{$page_title}</title>
-    <link rel="stylesheet" href="{$conf->app_url}/css/style.css">
-</head>
-<body>
-
 <div class="container">
   <div class="left">
+     <div class="animation a2">
+         <a href="{$conf->action_url}logout" style="margin: 20px; margin-left: 0px; margin-right: 0px; padding: 10px; border-radius: 20px; background-color: #cccccc; color:white; opacity:70%">Wyloguj</a>
+         <p style="color: #999999; float:right; font-size:15px; text-align:right;">
+            Użytkownik: {$user->login} <br> 
+            Rola: {$user->role}</p>
+        </div> 
     <div class="header">
       <h2 class="animation a1">{$page_header}</h2>
       <h4 class="animation a2">{$page_description}</h4>
     </div>
     <div class="form">
-        <form action="{$conf->action_root}calcCompute" method="post">
+        <form action="{$conf->action_url}calcCompute" method="post">
       
             <input id="id_kwota" type="text" name="kwota" class="form-field animation a3" placeholder="Kwota kredytu" value="{$form->kwota}">
             <input id="id_lata" type="text" name="lata" class="form-field animation a4" placeholder="Liczba lat" value="{$form->lata}">
@@ -27,27 +24,7 @@
     </div> 
 
 <div class="messages">
-
-{if $msgs->isError()}
-	<h4>Wystąpiły błędy: </h4>
-	<ol class="err" style="margin: 20px; margin-left: 0px; padding: 10px 10px 10px 30px; border-radius: 5px; background-color: #F9F; width:100%; opacity: 0.8;">
-	{foreach $msgs->getErrors() as $err}
-	{strip}
-		<li>{$err}</li>
-	{/strip}
-	{/foreach}
-	</ol>
-{/if}
-{if $msgs->isInfo()}
-	<h4 style="margin-bottom: -5px;">Informacje: </h4>
-	<ol class="inf" style="margin: 20px; margin-left: 0px; padding: 10px 10px 10px 30px; border-radius: 5px; background-color: #F9F; width:100%; opacity: 0.8;">
-	{foreach $msgs->getInfos() as $inf}
-	{strip}
-		<li>{$inf}</li>
-	{/strip}
-	{/foreach}
-	</ol>
-{/if}
+{include file='messages.tpl'}
 </div>
 
 {if !empty($result->result) && $result->result != null}
@@ -68,6 +45,4 @@
 {/if} 
 </div>
     
-   
-
 {/block}

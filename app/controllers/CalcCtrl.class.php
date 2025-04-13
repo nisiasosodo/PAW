@@ -1,15 +1,14 @@
 <?php
 namespace app\controllers;
 
-//zamieniamy zatem 'require' na 'use' wskazując jedynie przestrzeń nazw, w której znajduje się klasa
 use app\forms\CalcForm;
 use app\transfer\CalcResult;
 
 class CalcCtrl {
 
-	private $msgs;   //wiadomości dla widoku
-	private $form;   //dane formularza (do obliczeń i dla widoku)
-	private $result; //inne dane dla widoku
+	private $msgs;   
+	private $form;   
+	private $result;
         //zmienne do obliczen
         private $licz_mies; 
         private $mies_oproc;
@@ -71,7 +70,7 @@ class CalcCtrl {
 		return !getMessages()->isError();
 	}
 	
-	public function process(){
+	public function action_calcCompute(){
 
 		$this->getParams();
 		
@@ -97,9 +96,16 @@ class CalcCtrl {
 		
 		$this->generateView();
 	}
+        
+        public function action_calcShow(){
+		getMessages()->addInfo('Witaj w kalkulatorze kredytowym!');
+		$this->generateView();
+	}
 	
 	
 	public function generateView(){
+            
+                getSmarty()->assign('user',unserialize($_SESSION['user']));
                 	
 		getSmarty()->assign('page_title','Kalkulator kredytowy');
 		getSmarty()->assign('page_description','Oblicz miesięczną ratę swojego kredytu.');
@@ -109,6 +115,6 @@ class CalcCtrl {
                 getSmarty()->assign('result',$this->result);
                 
 		
-		getSmarty()->display('CalcView.html');
+		getSmarty()->display('CalcView.tpl');
 	}
 }
